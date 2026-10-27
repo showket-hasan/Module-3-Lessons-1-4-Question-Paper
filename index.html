@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Academic Science Reading Examination — The Architecture of Life</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        academic: ['"Times New Roman"', 'Times', 'Georgia', 'serif'],
+                        sans: ['system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+                    },
+                    colors: {
+                        parchment: '#fcfbf8',
+                        parchmentDark: '#f3efe6',
+                        ink: '#181715',
+                        navyHeader: '#1a2536',
+                        academicNavy: '#172a45',
+                        academicCrimson: '#7b1c1c',
+                        academicAmber: '#b45309',
+                        academicGreen: '#1b4d3e',
+                        borderMuted: '#d8d2c4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, Georgia, serif;
+            color: #181715;
+            background-color: #f6f4ee;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Academic Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eae5d9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b8b09d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8f8672;
+        }
+
+        /* Highlighting Classes */
+        .hl-yellow { background-color: #fef08a !important; color: #0f172a; }
+        .hl-green  { background-color: #bbf7d0 !important; color: #0f172a; }
+        .hl-blue   { background-color: #bae6fd !important; color: #0f172a; }
+
+        /* Double Academic Borders */
+        .academic-double-bottom {
+            border-bottom: 3px double #736b5e;
+        }
+        .academic-double-box {
+            border: 3px double #827867;
+        }
+
+        /* Printable Report Styles */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 11pt !important; }
+            #reportModal { position: static !important; overflow: visible !important; background: transparent !important; padding: 0 !important; }
+            #reportModal > div { box-shadow: none !important; border: 1px solid #666 !important; max-width: 100% !important; margin: 0 !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-academic text-ink selection:bg-amber-200 selection:text-ink">
+
+    <!-- TOP ACADEMIC HEADER -->
+    <header class="bg-[#1c2738] text-stone-100 shadow-md border-b-2 border-[#101721] sticky top-0 z-40 no-print">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
+                <!-- Branding -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded border border-amber-400/40 flex items-center justify-center bg-stone-900 text-amber-300 font-bold text-lg tracking-wider shadow-inner">
+                        SCI
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] tracking-widest uppercase text-amber-300 font-semibold">IELTS Academic Science Module</span>
+                            <span class="text-[9px] bg-red-950/80 border border-red-500/40 text-red-200 px-1.5 py-0.2 rounded font-sans font-bold">Official Assessment</span>
+                        </div>
+                        <h1 class="text-base sm:text-lg font-bold tracking-wide text-white leading-tight">The Architecture of Life: From Lenses to Life Systems</h1>
+                    </div>
+                </div>
+
+                <!-- Utilities: Progress, Timer, Submit -->
+                <div class="flex items-center justify-between md:justify-end gap-3 sm:gap-6 border-t md:border-t-0 pt-2 md:pt-0 border-stone-700 text-xs sm:text-sm">
+                    <!-- Progress Counter -->
+                    <div class="flex items-center gap-2 text-stone-300">
+                        <span class="hidden sm:inline">Answered:</span>
+                        <span id="answeredCounterBadge" class="bg-stone-900 px-2.5 py-1 rounded text-amber-300 font-mono font-bold border border-stone-600">0 / 40</span>
+                    </div>
+
+                    <!-- 50-Minute Countdown Clock -->
+                    <div class="flex items-center gap-2">
+                        <div class="text-right">
+                            <span class="text-[9px] uppercase tracking-wider block text-stone-400 font-sans">Remaining Time</span>
+                            <div id="examTimer" class="font-mono text-xl sm:text-2xl font-bold tracking-wider text-emerald-400 px-2 py-0.5 rounded bg-black/50 border border-stone-600">
+                                50:00
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="btnSubmitTest" onclick="confirmSubmitModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 rounded shadow transition flex items-center gap-1.5 border border-amber-500 text-xs sm:text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Submit Exam</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Passage Navigation Tab Bar -->
+            <div class="flex items-center justify-between border-t border-stone-700/70 mt-2.5 pt-2 text-xs font-sans">
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <span class="text-stone-400 font-semibold uppercase tracking-wider text-[11px] hidden sm:inline">Jump to Section:</span>
+                    <button onclick="switchActivePassage(1)" id="tabPassage1" class="px-3 py-1 rounded font-bold transition bg-amber-500 text-stone-950 shadow">
+                        Passage 1 (Q1–13)
+                    </button>
+                    <button onclick="switchActivePassage(2)" id="tabPassage2" class="px-3 py-1 rounded font-medium text-stone-300 hover:bg-stone-800 transition">
+                        Passage 2 (Q14–26)
+                    </button>
+                    <button onclick="switchActivePassage(3)" id="tabPassage3" class="px-3 py-1 rounded font-medium text-stone-300 hover:bg-stone-800 transition">
+                        Passage 3 (Q27–40)
+                    </button>
+                </div>
+                <div class="text-[11px] text-stone-400 italic">
+                    Duration: <strong>50 Minutes</strong> | Standard: 40 Questions
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN EXAM SPLIT WORKSPACE -->
+    <main id="examWorkspace" class="flex-1 max-w-7xl w-full mx-auto p-2 sm:p-4 lg:p-5 flex flex-col lg:flex-row gap-4">
+
+        <!-- LEFT COLUMN: READING PASSAGES & VISUAL DATA -->
+        <section class="lg:w-1/2 flex flex-col bg-white border border-stone-300 shadow-md rounded-lg overflow-hidden">
+            <!-- Passage Toolbar -->
+            <div class="bg-[#f2efe8] px-3 sm:px-4 py-2 border-b border-stone-300 flex items-center justify-between text-xs text-stone-700">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold uppercase tracking-wider text-stone-900 font-sans">Text Size:</span>
+                    <button onclick="changeFontSize(-1)" class="px-2 py-0.5 bg-stone-200 hover:bg-stone-300 rounded font-bold" title="Decrease font">A−</button>
+                    <button onclick="changeFontSize(1)" class="px-2 py-0.5 bg-stone-200 hover:bg-stone-300 rounded font-bold" title="Increase font">A+</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="hidden sm:inline font-semibold font-sans">Highlight:</span>
+                    <button onclick="setHighlightColor('yellow')" class="w-4 h-4 rounded-full bg-yellow-300 border border-stone-400 hover:scale-110 transition" title="Yellow"></button>
+                    <button onclick="setHighlightColor('green')" class="w-4 h-4 rounded-full bg-emerald-300 border border-stone-400 hover:scale-110 transition" title="Green"></button>
+                    <button onclick="setHighlightColor('blue')" class="w-4 h-4 rounded-full bg-sky-300 border border-stone-400 hover:scale-110 transition" title="Blue"></button>
+                    <button onclick="clearHighlights()" class="text-[11px] underline text-stone-600 hover:text-stone-900 ml-1 font-sans">Clear</button>
+                </div>
+            </div>
+
+            <!-- Scrollable Passage Container -->
+            <div id="passageContainer" class="p-4 sm:p-7 overflow-y-auto max-h-[75vh] lg:max-h-[82vh] text-[15.5px] leading-relaxed text-stone-900">
+                
+                <!-- PASSAGE 1 SECTION -->
+                <div id="passageSection1" class="passage-pane">
+                    <div class="text-center mb-5 pb-3 border-b border-stone-300">
+                        <span class="text-xs uppercase tracking-widest text-stone-500 font-semibold font-sans">Reading Passage 1 — Questions 1–13</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-950 mt-1">The Development and Technological Evolution of Microscopes</h2>
+                        <p class="text-xs text-stone-600 italic mt-1">From Single Lenses to High-Resolution Electron Beam Scanning</p>
+                    </div>
+
+                    <div class="bg-[#faf8f2] border border-stone-300 p-3 mb-5 rounded text-xs text-stone-800 leading-snug">
+                        <strong>Passage 1 Overview:</strong> You should spend roughly <strong>16 minutes</strong> on Questions 1–13 based on Reading Passage 1 below.
+                    </div>
+
+                    <article class="space-y-4 text-justify">
+                        <p id="p1-para-A">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph A</span>
+                            For centuries, the fundamental mechanisms of biological life remained hidden from human sight due to the structural limitations of the unaided human eye. The invention of the microscope fundamentally revolutionized biological science by opening a window into the microscopic realm. Among the earliest optical pioneers was Anton van Leeuwenhoek in the late 1600s, who engineered one of the first practical microscopes. Equipped with a meticulously crafted single lens, Leeuwenhoek's device was capable of enlarging images to approximately 270 times their original size, allowing humanity to witness living microorganisms for the first time.
+                        </p>
+
+                        <p id="p1-para-B">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph B</span>
+                            Building upon early optical breakthroughs, Robert Hooke utilized an advanced microscope in the early 1700s to examine thin sections of cork. His observations led him to coin the term 'cells' to describe the tiny, box-like compartments he observed. Subsequent scientific advancements led to the construction of the compound microscope, a light-based optical instrument that incorporates more than one glass lens to sequentially magnify objects. Modern compound light microscopes utilize visible light wavelengths and precision lens systems to enlarge biological specimens up to 1,500 times their original dimensions, rendering cellular boundaries and large organelles visible.
+                        </p>
+
+                        <p id="p1-para-C">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph C</span>
+                            Despite the utility of optical light microscopes, their resolution is physically constrained by the wavelength of visible light. To probe deeper into ultrastructural cellular architecture, twentieth-century physicists developed the electron microscope. Rather than relying on light rays and optical glass lenses, electron microscopes employ magnetic fields to accelerate and focus high-energy beams of electrons through or onto an object's surface. This mechanism achieves extraordinary magnification powers, capable of amplifying specimen images up to 100,000 times or more.
+                        </p>
+
+                        <p id="p1-para-D">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph D</span>
+                            Electron microscopy is divided into specialized technological classifications based on specimen preparation and image generation mechanisms. The Transmission Electron Microscope (TEM) directs an electron beam directly through a sample. Because electrons must penetrate the sample cleanly, specimens examined under a TEM must be dehydrated, mounted in hard plastic resin, and sliced into ultra-thin sections using a diamond blade. Consequently, a major operational limitation of the Transmission Electron Microscope is that it can only be used to view nonliving biological objects.
+                        </p>
+
+                        <p id="p1-para-E">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph E</span>
+                            In contrast, the Scanning Electron Microscope (SEM) is engineered to evaluate surface architecture. Rather than passing through a sliced specimen, the electron beam scans back and forth across the outer specimen surface. The resulting secondary electron emissions are captured to construct a vivid, three-dimensional image of the object's external surface topography. Together, light and electron microscopes provide scientists with indispensable tools for unraveling the structural details of organic matter.
+                        </p>
+                    </article>
+
+                    <!-- SCIENTIFIC DIAGRAM: MICROSCOPY TIMELINE & SPECIFICATIONS -->
+                    <div class="my-6 p-3 bg-stone-50 border border-stone-300 rounded shadow-sm">
+                        <div class="text-xs uppercase tracking-wider font-bold text-center text-[#172a45] mb-2 font-sans">
+                            Figure 1: Comparative Evolution & Specifications of Optical and Electron Microscopy
+                        </div>
+                        <div class="w-full overflow-x-auto">
+                            <svg viewBox="0 0 780 240" class="w-full h-auto text-xs" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arr1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+                                    </marker>
+                                </defs>
+                                <!-- Milestone 1 -->
+                                <rect x="15" y="20" width="165" height="180" rx="8" fill="#fdfcf9" stroke="#b8b09d" stroke-width="1.5"/>
+                                <rect x="15" y="20" width="165" height="32" rx="8" fill="#e8e2d4"/>
+                                <text x="97" y="41" font-family="'Times New Roman', serif" font-weight="bold" font-size="13" text-anchor="middle" fill="#1c2738">Leeuwenhoek (Late 1600s)</text>
+                                <text x="97" y="75" font-family="'Times New Roman', serif" font-size="11.5" text-anchor="middle" fill="#334155">Single Craft Lens</text>
+                                <text x="97" y="100" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#b45309">~270x</text>
+                                <text x="97" y="125" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">First observation of</text>
+                                <text x="97" y="142" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">living microbes</text>
+
+                                <!-- Arrow 1 -->
+                                <line x1="180" y1="110" x2="205" y2="110" stroke="#475569" stroke-width="2" marker-end="url(#arr1)"/>
+
+                                <!-- Milestone 2 -->
+                                <rect x="210" y="20" width="165" height="180" rx="8" fill="#fdfcf9" stroke="#b8b09d" stroke-width="1.5"/>
+                                <rect x="210" y="20" width="165" height="32" rx="8" fill="#e8e2d4"/>
+                                <text x="292" y="41" font-family="'Times New Roman', serif" font-weight="bold" font-size="13" text-anchor="middle" fill="#1c2738">Compound Light (1700s–)</text>
+                                <text x="292" y="75" font-family="'Times New Roman', serif" font-size="11.5" text-anchor="middle" fill="#334155">Multiple Glass Lenses</text>
+                                <text x="292" y="100" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#b45309">Up to 1,500x</text>
+                                <text x="292" y="125" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">Light wave limit;</text>
+                                <text x="292" y="142" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">Hooke names 'cells'</text>
+
+                                <!-- Arrow 2 -->
+                                <line x1="375" y1="110" x2="400" y2="110" stroke="#475569" stroke-width="2" marker-end="url(#arr1)"/>
+
+                                <!-- Milestone 3: TEM -->
+                                <rect x="405" y="20" width="170" height="180" rx="8" fill="#fdfcf9" stroke="#b8b09d" stroke-width="1.5"/>
+                                <rect x="405" y="20" width="170" height="32" rx="8" fill="#e8e2d4"/>
+                                <text x="490" y="41" font-family="'Times New Roman', serif" font-weight="bold" font-size="13" text-anchor="middle" fill="#1c2738">TEM (Transmission)</text>
+                                <text x="490" y="75" font-family="'Times New Roman', serif" font-size="11.5" text-anchor="middle" fill="#334155">Magnetic Field Beam</text>
+                                <text x="490" y="100" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e3a8a">100,000x+</text>
+                                <text x="490" y="125" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#dc2626">Nonliving only</text>
+                                <text x="490" y="142" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">Plastic resin sliced</text>
+
+                                <!-- Arrow 3 -->
+                                <line x1="575" y1="110" x2="600" y2="110" stroke="#475569" stroke-width="2" marker-end="url(#arr1)"/>
+
+                                <!-- Milestone 4: SEM -->
+                                <rect x="605" y="20" width="165" height="180" rx="8" fill="#fdfcf9" stroke="#b8b09d" stroke-width="1.5"/>
+                                <rect x="605" y="20" width="165" height="32" rx="8" fill="#e8e2d4"/>
+                                <text x="687" y="41" font-family="'Times New Roman', serif" font-weight="bold" font-size="13" text-anchor="middle" fill="#1c2738">SEM (Scanning)</text>
+                                <text x="687" y="75" font-family="'Times New Roman', serif" font-size="11.5" text-anchor="middle" fill="#334155">Secondary Electrons</text>
+                                <text x="687" y="100" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#047857">3D Surface</text>
+                                <text x="687" y="125" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">Scans outer topology;</text>
+                                <text x="687" y="142" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle" fill="#475569">vivid external imaging</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASSAGE 2 SECTION -->
+                <div id="passageSection2" class="passage-pane hidden">
+                    <div class="text-center mb-5 pb-3 border-b border-stone-300">
+                        <span class="text-xs uppercase tracking-widest text-stone-500 font-semibold font-sans">Reading Passage 2 — Questions 14–26</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-950 mt-1">Macromolecular Blueprints and Fundamental Cellular Architecture</h2>
+                        <p class="text-xs text-stone-600 italic mt-1">Biomolecular Subunits and Evolutionary Structural Organization</p>
+                    </div>
+
+                    <div class="bg-[#faf8f2] border border-stone-300 p-3 mb-5 rounded text-xs text-stone-800 leading-snug">
+                        <strong>Passage 2 Overview:</strong> You should spend roughly <strong>17 minutes</strong> on Questions 14–26 based on Reading Passage 2 below.
+                    </div>
+
+                    <article class="space-y-4 text-justify">
+                        <p id="p2-para-A">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph A</span>
+                            All living organisms, from single-celled bacteria to complex mammals, are constructed from fundamental structural units called cells. At the molecular level, every cell is built from four major categories of biological macromolecules: carbohydrates, lipids, proteins, and nucleic acids. These organic molecules perform specialized structural, enzymatic, genetic, and energy-storing duties essential for life.
+                        </p>
+
+                        <p id="p2-para-B">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph B</span>
+                            Carbohydrates provide immediate cellular energy and structural frameworks. They are organized hierarchically: complex polysaccharides break down into disaccharides (molecules composed of exactly two sugar units), which ultimately decompose into simple monosaccharides. Lipids, another vital class, include triglycerides formed from fatty acid chains bonded to a glycerol backbone. Beyond energy storage, lipids play a crucial role in forming biological membranes that shield the cell's internal environment from external hazards.
+                        </p>
+
+                        <p id="p2-para-C">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph C</span>
+                            Proteins are versatile functional polymers constructed from chains of peptides, which are assembled from fundamental amino acid subunits. They execute cellular transport, structural support, and chemical catalysis. Nucleic acids, comprising DNA (deoxyribonucleic acid) and RNA (ribonucleic acid), store and express genetic information. Both DNA and RNA are built from monomeric units called nucleotides, consisting of a nitrogenous base, a sugar group, and a phosphate group.
+                        </p>
+
+                        <p id="p2-para-D">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph D</span>
+                            At the structural level, living organisms are categorized into two primary evolutionary architectures based on internal compartmentalization: prokaryotic and eukaryotic cells. Prokaryotic cells represent simpler, smaller organisms (such as bacteria). A prokaryotic cell lacks a defined, membrane-bound nucleus and possesses no internal membrane-enclosed organelles. Its genetic material floats freely in a specialized region of the cytoplasm termed the nucleoid, surrounded by a cell membrane and outer capsule.
+                        </p>
+
+                        <p id="p2-para-E">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph E</span>
+                            In contrast, eukaryotic cells exhibit sophisticated internal compartmentalization. A eukaryotic cell features a distinct, membrane-bound nucleus that securely houses its DNA, along with numerous specialized membrane-bound organelles (such as mitochondria, endoplasmic reticulum, and Golgi apparatus) floating in the cytoplasm. This structural division allows eukaryotic cells to perform complex metabolic tasks simultaneously within isolated micro-environments.
+                        </p>
+                    </article>
+
+                    <!-- SCIENTIFIC SUMMARY CARD: CHEMICAL & ARCHITECTURAL SUMMARY -->
+                    <div class="my-6 p-4 bg-stone-50 border-2 border-stone-300 rounded shadow-sm text-xs font-academic">
+                        <h4 class="font-bold text-center text-sm text-[#172a45] uppercase tracking-wider mb-3">
+                            Macromolecular Chemical Hierarchy & Architecture Summary
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-stone-800">
+                            <div class="border border-stone-200 p-2.5 bg-white rounded">
+                                <strong class="text-amber-800 block mb-1">1. Carbohydrates Hierarchy:</strong>
+                                Polysaccharides &rarr; Disaccharides (2 sugar units) &rarr; Monosaccharides
+                            </div>
+                            <div class="border border-stone-200 p-2.5 bg-white rounded">
+                                <strong class="text-amber-800 block mb-1">2. Lipids Structure:</strong>
+                                Triglycerides = Fatty Acid chains + Glycerol Backbone (Membrane shields)
+                            </div>
+                            <div class="border border-stone-200 p-2.5 bg-white rounded">
+                                <strong class="text-amber-800 block mb-1">3. Proteins Composition:</strong>
+                                Complex Peptides &rarr; Fundamental Amino Acid Subunits (Catalysis & Transport)
+                            </div>
+                            <div class="border border-stone-200 p-2.5 bg-white rounded">
+                                <strong class="text-amber-800 block mb-1">4. Nucleic Acids Units:</strong>
+                                DNA / RNA &rarr; Nucleotide Monomers (Phosphate + Sugar + Nitrogenous Base)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASSAGE 3 SECTION -->
+                <div id="passageSection3" class="passage-pane hidden">
+                    <div class="text-center mb-5 pb-3 border-b border-stone-300">
+                        <span class="text-xs uppercase tracking-widest text-stone-500 font-semibold font-sans">Reading Passage 3 — Questions 27–40</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-950 mt-1">Organelle Mechanics, Plant vs. Animal Systems, and Multicellular Hierarchies</h2>
+                        <p class="text-xs text-stone-600 italic mt-1">Cellular Homeostasis, Differentiation, and Structural Levels of Life</p>
+                    </div>
+
+                    <div class="bg-[#faf8f2] border border-stone-300 p-3 mb-5 rounded text-xs text-stone-800 leading-snug">
+                        <strong>Passage 3 Overview:</strong> You should spend roughly <strong>17 minutes</strong> on Questions 27–40 based on Reading Passage 3 below.
+                    </div>
+
+                    <article class="space-y-4 text-justify">
+                        <p id="p3-para-A">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph A</span>
+                            Within eukaryotic cells, specialized internal structures called organelles collaborate to maintain biological homeostasis. The cell membrane, constructed from a phospholipid bilayer and transport proteins, acts as a selectively permeable barrier. It permits essential molecules such as water, oxygen, and fatty acids to cross freely while strictly regulating larger compounds like glucose and proteins. In plant cells, an additional outer layer—the rigid cell wall made of cellulose—provides mechanical support and maintains fixed cell architecture while allowing larger substances to pass.
+                        </p>
+
+                        <p id="p3-para-B">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph B</span>
+                            The fluid interior of the cell is the cytoplasm, a gel-like medium composed mainly of water, salts, proteins, and sugars that facilitates molecular transport and organelle positioning. Floating within the cytoplasm, the nucleus houses DNA, which contains master genetic code controlling growth and metabolism. DNA transcribes its instructions into RNA templates, which travel to ribosomes—non-membrane-bound structures found in both prokaryotic and eukaryotic cytoplasm—where amino acids are linked to synthesize proteins.
+                        </p>
+
+                        <p id="p3-para-C">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph C</span>
+                            Cellular energy transformations rely on specialized powerhouses. Mitochondria, present in both plant and animal cells, break down nutrients and food molecules to release chemical energy (ATP) required for cellular growth and active transport. In plant cells exclusively, chloroplasts containing green chlorophyll pigments harvest sunlight energy to synthesize carbohydrates via photosynthesis. The Golgi apparatus processes and packages newly synthesized proteins into membrane vesicles for distribution. For storage, plant cells feature a single, large central vacuole that maintains turgor pressure, whereas animal cells contain multiple smaller, temporary vacuoles for storing water, nutrients, and waste products.
+                        </p>
+
+                        <p id="p3-para-D">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph D</span>
+                            While unicellular organisms carry out all survival functions independently within a single cell, multicellular organisms rely on specialized cell networks. All cells in a multicellular organism originate from a single fertilized egg (zygote). Through cell differentiation, unspecialized precursor cells—termed stem cells in animals and located within meristems in plants—transform into distinct specialized forms (such as nerve cells, red blood cells, and cardiac muscle cells).
+                        </p>
+
+                        <p id="p3-para-E">
+                            <span class="inline-block bg-[#1c2738] text-amber-300 font-bold px-2 py-0.5 rounded text-xs mr-1 align-baseline font-sans select-none">Paragraph E</span>
+                            Specialized cells aggregate into organized functional layers called tissues. Animals possess four primary tissue classifications: muscle, epithelial, nervous, and connective tissues; plants possess dermal, vascular, and ground tissues. Multiple tissue types combine to form distinct organs (e.g., heart, brain, leaves, roots) that execute specific biological tasks. Organs further collaborate within integrated organ systems (e.g., circulatory, digestive, nervous systems) that sustain the whole organism. This complete structural continuum illustrates the biological hierarchy of life: Atom &rarr; Molecule &rarr; Organelle &rarr; Cell &rarr; Tissue &rarr; Organ &rarr; Organ System &rarr; Organism.
+                        </p>
+                    </article>
+
+                    <!-- SCIENTIFIC TABLE 1: PLANT VS ANIMAL CELLS -->
+                    <div class="my-6">
+                        <div class="text-xs uppercase tracking-wider font-bold text-center text-[#172a45] mb-2 font-sans">
+                            Table 1: Structural & Functional Comparison of Plant and Animal Cells
+                        </div>
+                        <div class="overflow-x-auto border border-stone-300 rounded shadow-sm">
+                            <table class="w-full text-left text-xs sm:text-sm border-collapse bg-white">
+                                <thead class="bg-[#1c2738] text-stone-100 uppercase tracking-wider font-semibold text-[11px] font-sans">
+                                    <tr>
+                                        <th class="p-2.5 border-r border-stone-600">Feature / Description</th>
+                                        <th class="p-2.5 border-r border-stone-600 text-emerald-300">Plant Cell Traits</th>
+                                        <th class="p-2.5 text-amber-300">Animal Cell Traits</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-200">
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="p-2 font-semibold bg-stone-50/70 border-r border-stone-200">Outer Boundary</td>
+                                        <td class="p-2 border-r border-stone-200">Cell Wall present (Rigid Cellulose)</td>
+                                        <td class="p-2">Cell Wall NOT present (Membrane only)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="p-2 font-semibold bg-stone-50/70 border-r border-stone-200">Cellular Shape</td>
+                                        <td class="p-2 border-r border-stone-200">Rectangular (Fixed Shape)</td>
+                                        <td class="p-2">Round / Irregular (Flexible Shape)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="p-2 font-semibold bg-stone-50/70 border-r border-stone-200">Photosynthetic Organelles</td>
+                                        <td class="p-2 border-r border-stone-200">Chloroplasts Present (Photosynthesis)</td>
+                                        <td class="p-2">Chloroplasts NOT Present</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="p-2 font-semibold bg-stone-50/70 border-r border-stone-200">Vacuole Architecture</td>
+                                        <td class="p-2 border-r border-stone-200">Single Large Central Vacuole</td>
+                                        <td class="p-2">Small, Temporary Vacuoles (Multiple)</td>
+                                    </tr>
+                                    <tr class="hover:bg-stone-50">
+                                        <td class="p-2 font-semibold bg-stone-50/70 border-r border-stone-200">Primary Food Storage</td>
+                                        <td class="p-2 border-r border-stone-200">Stored in the form of Starch</td>
+                                        <td class="p-2">Stored in the form of Glycogen</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SCIENTIFIC DIAGRAM: MULTICELLULAR HIERARCHY -->
+                    <div class="my-6 p-3 bg-stone-50 border border-stone-300 rounded shadow-sm">
+                        <div class="text-xs uppercase tracking-wider font-bold text-center text-[#172a45] mb-2 font-sans">
+                            Figure 2: The Biological Structural Continuum of Multicellular Life
+                        </div>
+                        <div class="w-full overflow-x-auto">
+                            <div class="flex items-center justify-between text-center min-w-[650px] p-2 text-xs font-mono">
+                                <div class="bg-white p-2 rounded border border-stone-300 shadow-sm w-16">
+                                    <div class="font-bold text-stone-900">Atom</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-white p-2 rounded border border-stone-300 shadow-sm w-20">
+                                    <div class="font-bold text-stone-900">Molecule</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-amber-50 p-2 rounded border border-amber-300 shadow-sm w-20">
+                                    <div class="font-bold text-amber-900">Organelle</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-blue-50 p-2 rounded border border-blue-300 shadow-sm w-16">
+                                    <div class="font-bold text-blue-900">Cell</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-white p-2 rounded border border-stone-300 shadow-sm w-16">
+                                    <div class="font-bold text-stone-900">Tissue</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-white p-2 rounded border border-stone-300 shadow-sm w-16">
+                                    <div class="font-bold text-stone-900">Organ</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-white p-2 rounded border border-stone-300 shadow-sm w-24">
+                                    <div class="font-bold text-stone-900">Organ System</div>
+                                </div>
+                                <span class="text-stone-400 font-bold">&rarr;</span>
+                                <div class="bg-emerald-50 p-2 rounded border border-emerald-300 shadow-sm w-20">
+                                    <div class="font-bold text-emerald-900">Organism</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-stone-300 pt-3 text-xs text-stone-500 flex justify-between font-mono">
+                    <span>Module 3: Advanced Academic Science Assessment</span>
+                    <span>40 Total Question Units</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: QUESTION BOOKLET & ANSWER FORM -->
+        <section class="lg:w-1/2 flex flex-col bg-white border border-stone-300 shadow-md rounded-lg overflow-hidden">
+            <!-- Nav Header -->
+            <div class="bg-[#1c2738] text-stone-200 px-4 py-2 border-b border-stone-800 flex items-center justify-between font-sans">
+                <span class="text-xs uppercase tracking-wider font-semibold text-amber-300">Question Booklet</span>
+                <span class="text-xs text-stone-300">Complete Standard 40 Questions</span>
+            </div>
+
+            <!-- Quick Jump Navigator (40 Buttons) -->
+            <div class="p-2 bg-stone-100 border-b border-stone-300 flex flex-wrap gap-1 items-center justify-center font-sans">
+                <span class="text-[10px] font-bold text-stone-600 uppercase mr-1">Quick Jump:</span>
+                <div id="quickNavContainer" class="flex flex-wrap gap-1 justify-center max-w-full">
+                    <!-- 40 Buttons generated via JS -->
+                </div>
+            </div>
+
+            <!-- Scrollable Questions Form -->
+            <form id="examinationForm" onsubmit="event.preventDefault(); confirmSubmitModal();" class="p-4 sm:p-6 overflow-y-auto max-h-[70vh] lg:max-h-[76vh] space-y-7">
+                
+                <!-- ================= PASSAGE 1 QUESTIONS (1-13) ================= -->
+                <div id="qgroup-passage1" class="space-y-6">
+                    <div class="border-b-2 border-stone-800 pb-1">
+                        <span class="text-xs uppercase font-bold text-amber-700 font-sans tracking-wider">Part 1 / Questions 1–13</span>
+                        <h3 class="text-lg font-bold text-stone-900">Passage 1 Question Booklet</h3>
+                    </div>
+
+                    <!-- Q1–5: TRUE / FALSE / NOT GIVEN -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 1–5</h4>
+                        <p class="text-xs text-stone-700 italic mt-0.5">Do the following statements agree with the information given in Reading Passage 1?</p>
+                        <div class="mt-2 text-[11px] space-y-0.5 bg-white p-2 rounded border border-stone-200 font-sans">
+                            <p><strong>TRUE</strong> &mdash; if statement agrees with the information</p>
+                            <p><strong>FALSE</strong> &mdash; if statement contradicts the information</p>
+                            <p><strong>NOT GIVEN</strong> &mdash; if there is no information on this</p>
+                        </div>
+                    </div>
+
+                    <!-- Items 1 to 5 -->
+                    <div class="space-y-4">
+                        <!-- Q1 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50 transition border border-transparent hover:border-stone-200" id="q-anchor-1">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold text-xs text-stone-800">1.</span>
+                                <div class="flex-1">
+                                    <p class="text-xs sm:text-sm text-stone-900">Anton van Leeuwenhoek's early microscope was capable of magnifying objects up to 1,500 times their original size.</p>
+                                    <div class="mt-2 flex flex-wrap gap-4 text-xs font-sans">
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q1" value="TRUE" onchange="markAnswered(1)" class="accent-amber-600"><span>TRUE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q1" value="FALSE" onchange="markAnswered(1)" class="accent-amber-600"><span>FALSE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q1" value="NOT GIVEN" onchange="markAnswered(1)" class="accent-amber-600"><span>NOT GIVEN</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50 transition border border-transparent hover:border-stone-200" id="q-anchor-2">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold text-xs text-stone-800">2.</span>
+                                <div class="flex-1">
+                                    <p class="text-xs sm:text-sm text-stone-900">Robert Hooke introduced the biological term 'cells' after observing cork structures in the early 1700s.</p>
+                                    <div class="mt-2 flex flex-wrap gap-4 text-xs font-sans">
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q2" value="TRUE" onchange="markAnswered(2)" class="accent-amber-600"><span>TRUE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q2" value="FALSE" onchange="markAnswered(2)" class="accent-amber-600"><span>FALSE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q2" value="NOT GIVEN" onchange="markAnswered(2)" class="accent-amber-600"><span>NOT GIVEN</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50 transition border border-transparent hover:border-stone-200" id="q-anchor-3">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold text-xs text-stone-800">3.</span>
+                                <div class="flex-1">
+                                    <p class="text-xs sm:text-sm text-stone-900">Light microscopes require biological specimens to be treated with chemical fluorescent dyes prior to examination.</p>
+                                    <div class="mt-2 flex flex-wrap gap-4 text-xs font-sans">
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q3" value="TRUE" onchange="markAnswered(3)" class="accent-amber-600"><span>TRUE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q3" value="FALSE" onchange="markAnswered(3)" class="accent-amber-600"><span>FALSE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q3" value="NOT GIVEN" onchange="markAnswered(3)" class="accent-amber-600"><span>NOT GIVEN</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50 transition border border-transparent hover:border-stone-200" id="q-anchor-4">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold text-xs text-stone-800">4.</span>
+                                <div class="flex-1">
+                                    <p class="text-xs sm:text-sm text-stone-900">Electron microscopes focus electron beams using precision-ground optical glass lenses.</p>
+                                    <div class="mt-2 flex flex-wrap gap-4 text-xs font-sans">
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q4" value="TRUE" onchange="markAnswered(4)" class="accent-amber-600"><span>TRUE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q4" value="FALSE" onchange="markAnswered(4)" class="accent-amber-600"><span>FALSE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q4" value="NOT GIVEN" onchange="markAnswered(4)" class="accent-amber-600"><span>NOT GIVEN</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50 transition border border-transparent hover:border-stone-200" id="q-anchor-5">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold text-xs text-stone-800">5.</span>
+                                <div class="flex-1">
+                                    <p class="text-xs sm:text-sm text-stone-900">Transmission Electron Microscopes (TEM) are unsuitable for observing living biological organisms.</p>
+                                    <div class="mt-2 flex flex-wrap gap-4 text-xs font-sans">
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q5" value="TRUE" onchange="markAnswered(5)" class="accent-amber-600"><span>TRUE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q5" value="FALSE" onchange="markAnswered(5)" class="accent-amber-600"><span>FALSE</span></label>
+                                        <label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="radio" name="q5" value="NOT GIVEN" onchange="markAnswered(5)" class="accent-amber-600"><span>NOT GIVEN</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q6–9: MULTIPLE CHOICE -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 6–9</h4>
+                        <p class="text-xs text-stone-700 italic">Choose the correct letter, <strong>A, B, C, or D</strong>.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Q6 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-6">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">6. What is the maximum magnification limit of a modern compound light microscope as stated in Paragraph B?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q6" value="A" onchange="markAnswered(6)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> 270 times</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q6" value="B" onchange="markAnswered(6)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> 1,500 times</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q6" value="C" onchange="markAnswered(6)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> 10,000 times</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q6" value="D" onchange="markAnswered(6)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> 100,000 times</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-7">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">7. How does a Scanning Electron Microscope (SEM) differ fundamentally from a Transmission Electron Microscope (TEM)?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q7" value="A" onchange="markAnswered(7)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> SEM utilizes visible light rays rather than magnetic fields.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q7" value="B" onchange="markAnswered(7)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> SEM produces three-dimensional images of an object's external surface.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q7" value="C" onchange="markAnswered(7)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> SEM requires specimens to be sliced into ultra-thin sections using diamonds.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q7" value="D" onchange="markAnswered(7)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> SEM is limited to a maximum magnification of 270 times.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-8">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">8. Which early scientist is credited with first naming cellular structures during the early 1700s?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q8" value="A" onchange="markAnswered(8)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> Anton van Leeuwenhoek</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q8" value="B" onchange="markAnswered(8)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> Robert Hooke</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q8" value="C" onchange="markAnswered(8)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> Theodor Schwann</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q8" value="D" onchange="markAnswered(8)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> Matthias Schleiden</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-9">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">9. Why is the Transmission Electron Microscope (TEM) restricted to nonliving biological samples?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q9" value="A" onchange="markAnswered(9)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> The high light intensity destroys living cell walls.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q9" value="B" onchange="markAnswered(9)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> Magnetic fields induce lethal electrical charges in living tissues.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q9" value="C" onchange="markAnswered(9)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> Specimens must be mounted in resin plastic and sliced into thin sections.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q9" value="D" onchange="markAnswered(9)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> Electrons can only reflect off metallic surfaces.</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q10–13: INSTRUMENT CLASSIFICATION -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 10–13</h4>
+                        <p class="text-xs text-stone-700 italic">Classify the descriptions according to the microscope type below:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2 p-2 bg-white rounded border border-stone-200 text-xs font-mono">
+                            <div><strong>A)</strong> Early Single-Lens Microscope</div>
+                            <div><strong>B)</strong> Compound Light Microscope</div>
+                            <div><strong>C)</strong> Transmission Electron Microscope (TEM)</div>
+                            <div><strong>D)</strong> Scanning Electron Microscope (SEM)</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-10">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>10.</strong> Achieves magnifications up to 1,500x by passing visible light through multiple optical lenses.</span>
+                            <select name="q10" onchange="markAnswered(10)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-11">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>11.</strong> Invented in the late 1600s, utilizing a single hand-crafted lens to achieve roughly 270x magnification.</span>
+                            <select name="q11" onchange="markAnswered(11)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-12">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>12.</strong> Scans an electron beam over outer specimen surfaces to construct vivid three-dimensional topographical images.</span>
+                            <select name="q12" onchange="markAnswered(12)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-13">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>13.</strong> Directs electron beams through sliced, plastic-mounted samples to observe internal ultrastructures.</span>
+                            <select name="q13" onchange="markAnswered(13)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PASSAGE 2 QUESTIONS (14-26) ================= -->
+                <div id="qgroup-passage2" class="space-y-6 pt-4 border-t-2 border-stone-300">
+                    <div class="border-b-2 border-stone-800 pb-1">
+                        <span class="text-xs uppercase font-bold text-amber-700 font-sans tracking-wider">Part 2 / Questions 14–26</span>
+                        <h3 class="text-lg font-bold text-stone-900">Passage 2 Question Booklet</h3>
+                    </div>
+
+                    <!-- Q14–18: SUMMARY COMPLETION -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 14–18</h4>
+                        <p class="text-xs text-stone-700 italic">Complete the sentences below. Choose <strong>NO MORE THAN TWO WORDS</strong> from Reading Passage 2 for each answer.</p>
+                    </div>
+
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-14">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>14.</strong> Complex polysaccharides break down into disaccharides, which further decompose into single sugar units called
+                                <input type="text" name="q14" oninput="markAnswered(14)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-15">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>15.</strong> Triglycerides are composed of a glycerol backbone chemically bonded to
+                                <input type="text" name="q15" oninput="markAnswered(15)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">
+                                chains.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-16">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>16.</strong> Proteins are constructed from peptide chains, which are synthesized from fundamental
+                                <input type="text" name="q16" oninput="markAnswered(16)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">
+                                units.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-17">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>17.</strong> Both DNA and RNA molecules are nucleic acids composed of monomeric units called
+                                <input type="text" name="q17" oninput="markAnswered(17)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-18">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>18.</strong> Lipids assist cellular survival by establishing protective barriers against the cell's
+                                <input type="text" name="q18" oninput="markAnswered(18)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">
+                                hazards.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q19–22: MULTIPLE CHOICE -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 19–22</h4>
+                        <p class="text-xs text-stone-700 italic">Choose the correct letter, <strong>A, B, C, or D</strong>.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Q19 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-19">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">19. Which structural feature is present in eukaryotic cells but strictly ABSENT in prokaryotic cells?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q19" value="A" onchange="markAnswered(19)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> Cytoplasm medium</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q19" value="B" onchange="markAnswered(19)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> Membrane-bound nucleus</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q19" value="C" onchange="markAnswered(19)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> Outer cell membrane</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q19" value="D" onchange="markAnswered(19)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> Genetic material (DNA)</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q20 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-20">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">20. Where is genetic material stored within a prokaryotic cell?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q20" value="A" onchange="markAnswered(20)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> Floating freely in the nucleoid region of the cytoplasm</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q20" value="B" onchange="markAnswered(20)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> Double-enclosed inside a nuclear membrane</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q20" value="C" onchange="markAnswered(20)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> Bound exclusively inside the Golgi apparatus</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q20" value="D" onchange="markAnswered(20)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> Shielded within the central vacuole</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q21 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-21">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">21. How many sugar units make up a disaccharide molecule?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q21" value="A" onchange="markAnswered(21)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> One single unit</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q21" value="B" onchange="markAnswered(21)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> Exactly two units</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q21" value="C" onchange="markAnswered(21)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> Three linked units</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q21" value="D" onchange="markAnswered(21)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> Hundreds of repeating units</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q22 -->
+                        <div class="q-item p-3 rounded hover:bg-stone-50" id="q-anchor-22">
+                            <p class="font-bold text-xs sm:text-sm text-stone-900 mb-1.5">22. What is the primary evolutionary advantage of internal compartmentalization in eukaryotic cells?</p>
+                            <div class="space-y-1.5 text-xs sm:text-sm pl-2">
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q22" value="A" onchange="markAnswered(22)" class="mt-0.5 accent-amber-600"><span><strong>A)</strong> It eliminates the need for nucleic acids.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q22" value="B" onchange="markAnswered(22)" class="mt-0.5 accent-amber-600"><span><strong>B)</strong> It allows metabolic processes to occur simultaneously in isolated micro-environments.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q22" value="C" onchange="markAnswered(22)" class="mt-0.5 accent-amber-600"><span><strong>C)</strong> It enables cells to survive without a cell membrane.</span></label>
+                                <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="q22" value="D" onchange="markAnswered(22)" class="mt-0.5 accent-amber-600"><span><strong>D)</strong> It converts proteins directly into glucose.</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q23–26: FEATURE MATCHING -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 23–26</h4>
+                        <p class="text-xs text-stone-700 italic">Match each cellular feature to the correct cell classification:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-2 p-2 bg-white rounded border border-stone-200 text-xs font-mono">
+                            <div><strong>A)</strong> Prokaryotic Cells Only</div>
+                            <div><strong>B)</strong> Eukaryotic Cells Only</div>
+                            <div><strong>C)</strong> Both Prokaryotic & Eukaryotic</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-23">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>23.</strong> Contains specialized internal membrane-bound organelles such as mitochondria and Golgi bodies.</span>
+                            <select name="q23" onchange="markAnswered(23)" class="w-36 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-24">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>24.</strong> Houses genetic material freely within an un-enclosed nucleoid region.</span>
+                            <select name="q24" onchange="markAnswered(24)" class="w-36 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-25">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>25.</strong> Enclosed by a protective cell membrane that regulates cellular boundary functions.</span>
+                            <select name="q25" onchange="markAnswered(25)" class="w-36 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-26">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>26.</strong> Utilizes nucleic acids (DNA and RNA) to encode genetic instructions for protein assembly.</span>
+                            <select name="q26" onchange="markAnswered(26)" class="w-36 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select Option</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= PASSAGE 3 QUESTIONS (27-40) ================= -->
+                <div id="qgroup-passage3" class="space-y-6 pt-4 border-t-2 border-stone-300">
+                    <div class="border-b-2 border-stone-800 pb-1">
+                        <span class="text-xs uppercase font-bold text-amber-700 font-sans tracking-wider">Part 3 / Questions 27–40</span>
+                        <h3 class="text-lg font-bold text-stone-900">Passage 3 Question Booklet</h3>
+                    </div>
+
+                    <!-- Q27–31: ORGANELLES TO FUNCTIONS -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 27–31</h4>
+                        <p class="text-xs text-stone-700 italic">Match each organelle description with the correct organelle from the list:</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 mt-2 p-2 bg-white rounded border border-stone-200 text-xs font-mono">
+                            <div><strong>A)</strong> Mitochondria</div>
+                            <div><strong>B)</strong> Chloroplasts</div>
+                            <div><strong>C)</strong> Golgi Apparatus</div>
+                            <div><strong>D)</strong> Ribosomes</div>
+                            <div><strong>E)</strong> Large Central Vacuole</div>
+                            <div><strong>F)</strong> Cellulose Cell Wall</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-27">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>27.</strong> Serves as the site of cellular protein synthesis in both prokaryotic and eukaryotic cytoplasm.</span>
+                            <select name="q27" onchange="markAnswered(27)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-28">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>28.</strong> Packages newly synthesized proteins into vesicles for intracellular transport.</span>
+                            <select name="q28" onchange="markAnswered(28)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-29">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>29.</strong> Breaks down nutrients to release chemical energy required for cellular activities.</span>
+                            <select name="q29" onchange="markAnswered(29)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-30">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>30.</strong> Rigid external structure in plant cells that maintains shape while allowing large molecules to pass.</span>
+                            <select name="q30" onchange="markAnswered(30)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                            </select>
+                        </div>
+
+                        <div class="q-item p-2.5 rounded hover:bg-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="q-anchor-31">
+                            <span class="text-xs sm:text-sm text-stone-900 leading-snug"><strong>31.</strong> Harvests light energy to synthesize chemical energy via photosynthesis in plants.</span>
+                            <select name="q31" onchange="markAnswered(31)" class="w-32 border border-stone-400 bg-white rounded px-2 py-1 text-xs font-bold outline-none font-mono">
+                                <option value="">Select</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Q32–35: TABLE COMPLETION -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 32–35</h4>
+                        <p class="text-xs text-stone-700 italic">Complete the table sentences below. Choose <strong>NO MORE THAN TWO WORDS</strong> from Reading Passage 3 for each answer.</p>
+                    </div>
+
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-32">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>32.</strong> Plant cells maintain a fixed rectangular shape, whereas animal cells exhibit a round or
+                                <input type="text" name="q32" oninput="markAnswered(32)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-32 mx-1">
+                                shape.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-33">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>33.</strong> Unlike plant cells which possess chloroplasts for food synthesis, animal cells have
+                                <input type="text" name="q33" oninput="markAnswered(33)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-32 mx-1">
+                                chloroplasts.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-34">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>34.</strong> Animal cells contain small,
+                                <input type="text" name="q34" oninput="markAnswered(34)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-32 mx-1">
+                                vacuoles, contrasting with the single large vacuole of plant cells.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-35">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>35.</strong> While plant cells store excess carbohydrates as starch, animal cells store energy in the form of
+                                <input type="text" name="q35" oninput="markAnswered(35)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-32 mx-1">.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q36–40: SHORT ANSWER & HIERARCHY COMPLETION -->
+                    <div class="bg-[#fbfaf6] border-l-4 border-amber-600 p-3 rounded mt-4">
+                        <h4 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">Questions 36–40</h4>
+                        <p class="text-xs text-stone-700 italic">Complete the sentences below. Choose <strong>NO MORE THAN TWO WORDS</strong> from Reading Passage 3 for each answer.</p>
+                    </div>
+
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-36">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>36.</strong> In plant species, unspecialized cells capable of continuous growth and development are localized in regions called
+                                <input type="text" name="q36" oninput="markAnswered(36)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-37">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>37.</strong> Unspecialized animal cells that possess the capacity to mature into specialized cells like neurons are termed
+                                <input type="text" name="q37" oninput="markAnswered(37)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-38">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>38.</strong> Muscle, epithelial, nervous, and connective layers represent the four primary classifications of animal
+                                <input type="text" name="q38" oninput="markAnswered(38)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-39">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>39.</strong> In the structural hierarchy of multicellular life, molecules assemble into
+                                <input type="text" name="q39" oninput="markAnswered(39)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-36 mx-1">,
+                                which subsequently form cells.
+                            </label>
+                        </div>
+
+                        <div class="q-item p-2.5 bg-stone-50/70 border border-stone-200 rounded" id="q-anchor-40">
+                            <label class="block text-stone-900 leading-relaxed">
+                                <strong>40.</strong> The biological process by which unspecialized cells transform into distinct cells with specialized structures is known as
+                                <input type="text" name="q40" oninput="markAnswered(40)" placeholder="answer..." class="border-b-2 border-stone-500 bg-white px-2 py-0.5 text-xs font-semibold focus:border-amber-600 outline-none w-44 mx-1">.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Action Trigger -->
+                <div class="pt-5 flex justify-end">
+                    <button type="button" onclick="confirmSubmitModal()" class="w-full sm:w-auto bg-[#1c2738] hover:bg-[#121a26] text-amber-300 hover:text-amber-200 font-bold px-8 py-3 rounded shadow-md border border-stone-700 transition font-sans text-sm">
+                        Conclude Examination & Generate Comprehensive Diagnostic Report &rarr;
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- CUSTOM SUBMISSION CONFIRMATION MODAL (Strictly NO alert()) -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6 shadow-2xl border-2 border-stone-400">
+            <h3 class="text-xl font-bold text-stone-900 border-b border-stone-200 pb-2">Confirm Test Submission</h3>
+            <p id="confirmModalMessage" class="text-stone-700 text-sm mt-3 leading-relaxed">
+                You are about to conclude your 50-minute science reading examination and generate your diagnostic performance assessment report.
+            </p>
+            <div id="unansweredWarning" class="mt-3 p-3 bg-amber-50 border border-amber-300 rounded text-xs text-amber-900 hidden font-sans">
+                <!-- Dynamically populated warning -->
+            </div>
+            <div class="mt-6 flex justify-end gap-3 font-sans text-xs">
+                <button onclick="closeModal('confirmModal')" class="px-4 py-2 border border-stone-300 rounded text-stone-700 hover:bg-stone-100 font-semibold">
+                    Return to Exam
+                </button>
+                <button onclick="gradeAndRenderReport()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded shadow">
+                    Submit & Grade Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIME-UP MODAL (Triggers automatically at 00:00) -->
+    <div id="timeUpModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6 shadow-2xl border-2 border-red-700 text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-red-100 text-red-700 flex items-center justify-center mb-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-red-900">50-Minute Test Duration Concluded</h3>
+            <p class="text-stone-700 text-xs sm:text-sm mt-2">
+                The allotted 50 minutes for this academic reading assessment have expired. In accordance with test protocol, your responses will now be automatically evaluated.
+            </p>
+            <div class="mt-6">
+                <button onclick="closeModal('timeUpModal'); gradeAndRenderReport();" class="w-full px-5 py-2.5 bg-red-800 hover:bg-red-900 text-white font-bold rounded shadow text-xs sm:text-sm font-sans">
+                    View Automated Diagnostic Assessment Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPREHENSIVE POST-TEST DIAGNOSTIC REPORT MODAL -->
+    <div id="reportModal" class="fixed inset-0 bg-[#0e1622]/85 backdrop-blur-sm z-50 hidden overflow-y-auto p-3 sm:p-6">
+        <div class="bg-white rounded-lg max-w-5xl mx-auto p-5 sm:p-9 shadow-2xl border-4 border-double border-stone-400 my-4">
+            
+            <!-- Report Formal Heading -->
+            <div class="border-b-2 border-stone-900 pb-5 mb-6 text-center">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <span class="w-2.5 h-2.5 bg-amber-600 rounded-full"></span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-stone-500 font-sans">IELTS Academic Diagnostic Assessment System</span>
+                    <span class="w-2.5 h-2.5 bg-amber-600 rounded-full"></span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-bold text-stone-950 uppercase tracking-tight">Official Diagnostic Examination Report</h2>
+                <p class="text-stone-600 italic text-sm mt-1">Module 3: The Architecture of Life — From Lenses to Life Systems (40 Items)</p>
+                
+                <div class="flex flex-wrap justify-center gap-4 text-xs text-stone-600 mt-3 font-mono">
+                    <span>Date: <strong id="reportDate" class="text-stone-900"></strong></span>
+                    <span>|</span>
+                    <span>Time Spent: <strong id="reportTimeSpent" class="text-stone-900"></strong></span>
+                    <span>|</span>
+                    <span>Standard Allotted: <strong>50 Minutes</strong></span>
+                    <span>|</span>
+                    <span>Band Scale: <strong>IELTS 1.0 – 9.0 Descriptor</strong></span>
+                </div>
+            </div>
+
+            <!-- Primary Metrics Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <!-- Raw Score -->
+                <div class="bg-[#faf8f3] border-2 border-stone-300 p-4 rounded text-center">
+                    <span class="text-xs uppercase font-semibold text-stone-500 tracking-wider font-sans">Raw Score</span>
+                    <div class="text-3xl sm:text-4xl font-bold text-stone-900 my-1 font-mono" id="reportRawScore">0 / 40</div>
+                    <span class="text-xs text-stone-600 font-mono" id="reportPercentage">0% Overall Accuracy</span>
+                </div>
+
+                <!-- IELTS Band Score Equivalent -->
+                <div class="bg-[#f0f5fa] border-2 border-[#1e3a5f] p-4 rounded text-center">
+                    <span class="text-xs uppercase font-semibold text-[#1e3a5f] tracking-wider font-sans">IELTS Band Score</span>
+                    <div class="text-3xl sm:text-4xl font-bold text-[#1e3a5f] my-1 font-mono" id="reportBandScore">Band 0.0</div>
+                    <span class="text-xs font-semibold text-stone-700 font-sans" id="reportBandLevel">Standard Assessment</span>
+                </div>
+
+                <!-- Time Spent -->
+                <div class="bg-[#faf8f3] border-2 border-stone-300 p-4 rounded text-center">
+                    <span class="text-xs uppercase font-semibold text-stone-500 tracking-wider font-sans">Time Duration</span>
+                    <div class="text-2xl sm:text-3xl font-bold text-stone-800 my-1 font-mono" id="reportTimeDisplay">50:00</div>
+                    <span class="text-xs text-stone-600 font-sans">Allotted: 50 Minutes</span>
+                </div>
+
+                <!-- Competency Badge -->
+                <div class="bg-[#faf8f3] border-2 border-stone-300 p-4 rounded text-center">
+                    <span class="text-xs uppercase font-semibold text-stone-500 tracking-wider font-sans">Mastery Classification</span>
+                    <div class="text-xl sm:text-2xl font-bold text-stone-900 my-1.5" id="reportCompetencyText">Scientific Literacy</div>
+                    <span class="text-xs px-2.5 py-0.5 rounded font-mono font-bold" id="reportCompetencyBadge">Proficient</span>
+                </div>
+            </div>
+
+            <!-- Category-Wise Diagnostic Performance Bars -->
+            <div class="mb-8 bg-stone-50 p-5 rounded-lg border border-stone-300">
+                <h3 class="font-bold text-sm text-stone-900 uppercase tracking-wide mb-3 border-b border-stone-200 pb-1 font-sans">
+                    Skill & Question Type Diagnostic Profiling
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                    <!-- TFNG -->
+                    <div>
+                        <div class="flex justify-between font-semibold mb-1">
+                            <span>True / False / Not Given (Q1–5)</span>
+                            <span id="scoreTypeTFNG" class="font-mono">0/5</span>
+                        </div>
+                        <div class="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="barTFNG" class="bg-amber-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- MCQ -->
+                    <div>
+                        <div class="flex justify-between font-semibold mb-1">
+                            <span>Multiple Choice (Q6–9, Q19–22)</span>
+                            <span id="scoreTypeMCQ" class="font-mono">0/8</span>
+                        </div>
+                        <div class="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="barMCQ" class="bg-emerald-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- Classification & Feature Matching -->
+                    <div>
+                        <div class="flex justify-between font-semibold mb-1">
+                            <span>Instrument & Cell Feature Matching (Q10–13, Q23–26)</span>
+                            <span id="scoreTypeClass" class="font-mono">0/8</span>
+                        </div>
+                        <div class="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="barClass" class="bg-sky-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- Organelle Matching -->
+                    <div>
+                        <div class="flex justify-between font-semibold mb-1">
+                            <span>Organelle Function Matching (Q27–31)</span>
+                            <span id="scoreTypeOrganelle" class="font-mono">0/5</span>
+                        </div>
+                        <div class="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="barOrganelle" class="bg-purple-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <!-- Summary, Table & Hierarchy Completion -->
+                    <div class="md:col-span-2">
+                        <div class="flex justify-between font-semibold mb-1">
+                            <span>Lexical Completion: Summary, Table & Hierarchy (Q14–18, Q32–40)</span>
+                            <span id="scoreTypeCompletion" class="font-mono">0/14</span>
+                        </div>
+                        <div class="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+                            <div id="barCompletion" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strengths, Weaknesses, and Remediation Table -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <!-- Identified Strengths -->
+                <div class="bg-emerald-50/70 border border-emerald-300 p-4 rounded-lg">
+                    <h4 class="font-bold text-emerald-950 flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider mb-2 font-sans">
+                        <svg class="w-4 h-4 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        Demonstrated Strengths
+                    </h4>
+                    <ul id="reportStrengthsList" class="text-xs text-stone-800 space-y-1.5 list-disc pl-4 leading-relaxed">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+                <!-- Identified Weaknesses & Distractor Traps -->
+                <div class="bg-rose-50/70 border border-rose-300 p-4 rounded-lg">
+                    <h4 class="font-bold text-rose-950 flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider mb-2 font-sans">
+                        <svg class="w-4 h-4 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                        Identified Vulnerabilities & Traps
+                    </h4>
+                    <ul id="reportWeaknessesList" class="text-xs text-stone-800 space-y-1.5 list-disc pl-4 leading-relaxed">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+                <!-- Remediation & Actionable Improvement Plan -->
+                <div class="bg-amber-50/70 border border-amber-300 p-4 rounded-lg">
+                    <h4 class="font-bold text-amber-950 flex items-center gap-1.5 text-xs sm:text-sm uppercase tracking-wider mb-2 font-sans">
+                        <svg class="w-4 h-4 text-amber-700" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a10.99 10.99 0 00-.25 2.274c0 3.337 2.008 6.096 4.908 6.643a1 1 0 00.384 0c2.9-.547 4.908-3.306 4.908-6.643 0-.78-.088-1.543-.25-2.274l2.644-1.131a1 1 0 000-1.84l-7-3zM6.75 12a4.5 4.5 0 019 0 4.5 4.5 0 01-9 0z"></path></svg>
+                        Actionable Improvement Plan
+                    </h4>
+                    <ul id="reportImprovementList" class="text-xs text-stone-800 space-y-1.5 list-disc pl-4 leading-relaxed">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DETAILED QUESTION-BY-QUESTION AUDIT TABLE (Q1 TO Q40) -->
+            <div class="mb-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+                    <h3 class="font-bold text-sm text-stone-900 uppercase tracking-wide font-sans">
+                        Complete Question-by-Question Scientific Audit & Evidence
+                    </h3>
+                    <div class="flex items-center gap-2 text-xs font-sans">
+                        <span class="font-medium text-stone-600">Filter Items:</span>
+                        <button onclick="filterReportTable('all')" class="px-2.5 py-1 bg-stone-800 text-white rounded font-bold" id="filterBtnAll">All (40)</button>
+                        <button onclick="filterReportTable('incorrect')" class="px-2.5 py-1 bg-rose-100 text-rose-800 hover:bg-rose-200 rounded font-bold" id="filterBtnIncorrect">Errors Only</button>
+                        <button onclick="filterReportTable('correct')" class="px-2.5 py-1 bg-emerald-100 text-emerald-800 hover:bg-emerald-200 rounded font-bold" id="filterBtnCorrect">Correct Only</button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border border-stone-300 rounded shadow-sm max-h-[500px]">
+                    <table class="w-full text-left text-xs sm:text-sm border-collapse bg-white">
+                        <thead class="bg-[#1c2738] text-stone-100 uppercase tracking-wider font-semibold text-[11px] font-sans sticky top-0 z-10">
+                            <tr>
+                                <th class="p-2 border-r border-stone-600 text-center w-10">Q#</th>
+                                <th class="p-2 border-r border-stone-600 text-center w-28">Your Answer</th>
+                                <th class="p-2 border-r border-stone-600 text-center w-28">Key Answer</th>
+                                <th class="p-2 border-r border-stone-600 text-center w-20">Status</th>
+                                <th class="p-2 border-r border-stone-600 text-center w-28">Text Location</th>
+                                <th class="p-2">Scientific Explanation & Text Evidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailedReportTableBody" class="divide-y divide-stone-200">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="flex flex-wrap justify-end gap-3 pt-4 border-t border-stone-300 no-print font-sans">
+                <button onclick="window.print()" class="px-5 py-2.5 border border-stone-400 bg-stone-100 hover:bg-stone-200 rounded text-stone-800 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Print Report / Save PDF
+                </button>
+                <button onclick="closeModal('reportModal')" class="px-6 py-2.5 bg-[#1c2738] hover:bg-[#111924] text-white rounded font-bold text-xs uppercase tracking-wider shadow">
+                    Close & Review Test Form
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT EXAM ENGINE -->
+    <script>
+        /* MASTER ANSWER KEY & SCIENTIFIC CITATIONS (Questions 1 to 40) */
+        const EXAM_DATA = [
+            // Passage 1: Questions 1–13
+            {
+                q: 1, type: "TFNG", section: "Passage 1", key: "FALSE", location: "Passage 1, Para A",
+                explanation: "Paragraph A states Leeuwenhoek's microscope magnified objects about 270 times, whereas 1,500x is the limit of modern compound light microscopes (Paragraph B)."
+            },
+            {
+                q: 2, type: "TFNG", section: "Passage 1", key: "TRUE", location: "Passage 1, Para B",
+                explanation: "Paragraph B explicitly confirms Robert Hooke coined the term 'cells' in the early 1700s after observing thin sections of cork."
+            },
+            {
+                q: 3, type: "TFNG", section: "Passage 1", key: "NOT GIVEN", location: "Passage 1, Para B",
+                explanation: "The passage notes compound microscopes use light and lens systems, but makes no mention of treating specimens with fluorescent dyes."
+            },
+            {
+                q: 4, type: "TFNG", section: "Passage 1", key: "FALSE", location: "Passage 1, Para C",
+                explanation: "Paragraph C states electron microscopes employ magnetic fields to accelerate and focus electron beams, rather than precision glass lenses."
+            },
+            {
+                q: 5, type: "TFNG", section: "Passage 1", key: "TRUE", location: "Passage 1, Para D",
+                explanation: "Paragraph D explicitly states TEM samples must be dehydrated, mounted in hard plastic resin, and sliced, restricting TEM to nonliving objects."
+            },
+            {
+                q: 6, type: "MCQ", section: "Passage 1", key: "B", location: "Passage 1, Para B",
+                explanation: "Paragraph B confirms modern compound light microscopes can enlarge biological specimens up to 1,500 times."
+            },
+            {
+                q: 7, type: "MCQ", section: "Passage 1", key: "B", location: "Passage 1, Para E",
+                explanation: "Paragraph E explains SEM captures secondary electron emissions to construct a 3D image of the object's external surface topography."
+            },
+            {
+                q: 8, type: "MCQ", section: "Passage 1", key: "B", location: "Passage 1, Para B",
+                explanation: "Paragraph B attributes the coining of the biological term 'cells' during the early 1700s to Robert Hooke."
+            },
+            {
+                q: 9, type: "MCQ", section: "Passage 1", key: "C", location: "Passage 1, Para D",
+                explanation: "Paragraph D notes TEM requires specimens to be dehydrated, mounted in plastic resin, and sliced into ultra-thin sections using diamond blades."
+            },
+            {
+                q: 10, type: "CLASS", section: "Passage 1", key: "B", location: "Passage 1, Para B",
+                explanation: "Compound Light Microscope incorporates more than one glass lens to magnify specimens up to 1,500x."
+            },
+            {
+                q: 11, type: "CLASS", section: "Passage 1", key: "A", location: "Passage 1, Para A",
+                explanation: "Leeuwenhoek's single-lens instrument engineered in the late 1600s achieved approximately 270x magnification."
+            },
+            {
+                q: 12, type: "CLASS", section: "Passage 1", key: "D", location: "Passage 1, Para E",
+                explanation: "Scanning Electron Microscope (SEM) scans back and forth across outer surfaces for vivid 3D topographical images."
+            },
+            {
+                q: 13, type: "CLASS", section: "Passage 1", key: "C", location: "Passage 1, Para D",
+                explanation: "Transmission Electron Microscope (TEM) directs electron beams through ultra-thin sliced specimens mounted in resin."
+            },
+
+            // Passage 2: Questions 14–26
+            {
+                q: 14, type: "COMPLETION", section: "Passage 2", key: "monosaccharides", accepted: ["monosaccharides", "monosaccharide"], location: "Passage 2, Para B",
+                explanation: "Paragraph B states polysaccharides break down into disaccharides, which ultimately decompose into simple monosaccharides."
+            },
+            {
+                q: 15, type: "COMPLETION", section: "Passage 2", key: "fatty acid", accepted: ["fatty acid", "fatty acids"], location: "Passage 2, Para B",
+                explanation: "Paragraph B defines triglycerides as fatty acid chains bonded chemically to a glycerol backbone."
+            },
+            {
+                q: 16, type: "COMPLETION", section: "Passage 2", key: "amino acid", accepted: ["amino acid", "amino acids"], location: "Passage 2, Para C",
+                explanation: "Paragraph C explains that proteins are assembled from fundamental amino acid subunits."
+            },
+            {
+                q: 17, type: "COMPLETION", section: "Passage 2", key: "nucleotides", accepted: ["nucleotides", "nucleotide"], location: "Passage 2, Para C",
+                explanation: "Paragraph C states both DNA and RNA are built from monomeric units called nucleotides."
+            },
+            {
+                q: 18, type: "COMPLETION", section: "Passage 2", key: "external", accepted: ["external", "external hazards", "hazards", "external environment"], location: "Passage 2, Para B",
+                explanation: "Paragraph B notes biological membranes formed from lipids shield the internal cell environment from external hazards."
+            },
+            {
+                q: 19, type: "MCQ", section: "Passage 2", key: "B", location: "Passage 2, Para D & E",
+                explanation: "Paragraph D and E establish that a distinct membrane-bound nucleus is present in eukaryotic cells but strictly absent in prokaryotes."
+            },
+            {
+                q: 20, type: "MCQ", section: "Passage 2", key: "A", location: "Passage 2, Para D",
+                explanation: "Paragraph D confirms prokaryotic genetic material floats freely in the nucleoid region of the cytoplasm."
+            },
+            {
+                q: 21, type: "MCQ", section: "Passage 2", key: "B", location: "Passage 2, Para B",
+                explanation: "Paragraph B explicitly defines disaccharides as molecules composed of exactly two sugar units."
+            },
+            {
+                q: 22, type: "MCQ", section: "Passage 2", key: "B", location: "Passage 2, Para E",
+                explanation: "Paragraph E highlights that internal compartmentalization allows eukaryotic cells to perform complex metabolic tasks simultaneously in isolated micro-environments."
+            },
+            {
+                q: 23, type: "CLASS", section: "Passage 2", key: "B", location: "Passage 2, Para E",
+                explanation: "Membrane-bound organelles such as mitochondria and Golgi bodies are exclusive to eukaryotic cellular architecture."
+            },
+            {
+                q: 24, type: "CLASS", section: "Passage 2", key: "A", location: "Passage 2, Para D",
+                explanation: "Prokaryotic cells lack an enclosed nucleus, possessing genetic material floating freely in the nucleoid region."
+            },
+            {
+                q: 25, type: "CLASS", section: "Passage 2", key: "C", location: "Passage 2, Para D & E",
+                explanation: "Both prokaryotic and eukaryotic cells are enclosed by a protective cell membrane regulating boundary transport."
+            },
+            {
+                q: 26, type: "CLASS", section: "Passage 2", key: "C", location: "Passage 2, Para C & D",
+                explanation: "Both prokaryotic and eukaryotic organisms utilize DNA and RNA nucleic acids to encode genetic instructions."
+            },
+
+            // Passage 3: Questions 27–40
+            {
+                q: 27, type: "ORGANELLE", section: "Passage 3", key: "D", location: "Passage 3, Para B",
+                explanation: "Paragraph B notes ribosomes are non-membrane-bound sites where amino acids link to synthesize proteins in both prokaryotic and eukaryotic cells."
+            },
+            {
+                q: 28, type: "ORGANELLE", section: "Passage 3", key: "C", location: "Passage 3, Para C",
+                explanation: "Paragraph C states the Golgi apparatus processes and packages newly synthesized proteins into membrane vesicles."
+            },
+            {
+                q: 29, type: "ORGANELLE", section: "Passage 3", key: "A", location: "Passage 3, Para C",
+                explanation: "Paragraph C identifies mitochondria as powerhouses that break down nutrients to release chemical energy (ATP)."
+            },
+            {
+                q: 30, type: "ORGANELLE", section: "Passage 3", key: "F", location: "Passage 3, Para A",
+                explanation: "Paragraph A describes the plant cell wall made of cellulose as a rigid outer structure providing mechanical support while allowing substances to pass."
+            },
+            {
+                q: 31, type: "ORGANELLE", section: "Passage 3", key: "B", location: "Passage 3, Para C",
+                explanation: "Paragraph C confirms chloroplasts containing chlorophyll harvest sunlight energy to synthesize carbohydrates via photosynthesis."
+            },
+            {
+                q: 32, type: "COMPLETION", section: "Passage 3", key: "irregular", accepted: ["irregular", "round", "round irregular", "flexible"], location: "Passage 3, Para A & Table 1",
+                explanation: "Table 1 and Paragraph A contrast fixed rectangular plant cells with round or irregular animal cells."
+            },
+            {
+                q: 33, type: "COMPLETION", section: "Passage 3", key: "no", accepted: ["no", "not present", "zero", "lacking"], location: "Passage 3, Para C & Table 1",
+                explanation: "Table 1 confirms animal cells have no chloroplasts (chloroplasts NOT present)."
+            },
+            {
+                q: 34, type: "COMPLETION", section: "Passage 3", key: "temporary", accepted: ["temporary", "multiple temporary"], location: "Passage 3, Para C & Table 1",
+                explanation: "Paragraph C and Table 1 state animal cells contain small, temporary vacuoles."
+            },
+            {
+                q: 35, type: "COMPLETION", section: "Passage 3", key: "glycogen", accepted: ["glycogen"], location: "Passage 3, Para C & Table 1",
+                explanation: "Table 1 explicitly states excess carbohydrates in animal cells are stored in the form of glycogen."
+            },
+            {
+                q: 36, type: "COMPLETION", section: "Passage 3", key: "meristems", accepted: ["meristems", "meristem"], location: "Passage 3, Para D",
+                explanation: "Paragraph D states that in plants, unspecialized precursor growth cells are located within meristems."
+            },
+            {
+                q: 37, type: "COMPLETION", section: "Passage 3", key: "stem cells", accepted: ["stem cells", "stem cell"], location: "Passage 3, Para D",
+                explanation: "Paragraph D notes that unspecialized animal precursor cells are termed stem cells."
+            },
+            {
+                q: 38, type: "COMPLETION", section: "Passage 3", key: "tissues", accepted: ["tissues", "tissue"], location: "Passage 3, Para E",
+                explanation: "Paragraph E lists muscle, epithelial, nervous, and connective layers as the four primary classifications of animal tissues."
+            },
+            {
+                q: 39, type: "COMPLETION", section: "Passage 3", key: "organelles", accepted: ["organelles", "organelle"], location: "Passage 3, Para E",
+                explanation: "Paragraph E details the structural hierarchy: Atom -> Molecule -> Organelle -> Cell -> Tissue -> Organ -> Organ System -> Organism."
+            },
+            {
+                q: 40, type: "COMPLETION", section: "Passage 3", key: "cell differentiation", accepted: ["cell differentiation", "differentiation"], location: "Passage 3, Para D",
+                explanation: "Paragraph D defines cell differentiation as the process through which unspecialized precursor cells transform into distinct specialized forms."
+            }
+        ];
+
+        /* STATE ENGINE */
+        let totalSeconds = 50 * 60; // 50 Minutes
+        let timerInterval = null;
+        let testSubmitted = false;
+        let activePassage = 1;
+        let activeHighlightColor = 'yellow';
+        let currentPassageFontSize = 15.5;
+        let cachedAuditRows = [];
+
+        /* INITIALIZATION ON DOM LOAD */
+        window.addEventListener('DOMContentLoaded', () => {
+            initQuickNav();
+            startTimer();
+            setCurrentDateDisplay();
+            switchActivePassage(1);
+        });
+
+        /* QUICK JUMP NAVIGATION BAR CREATOR (1 to 40) */
+        function initQuickNav() {
+            const container = document.getElementById('quickNavContainer');
+            container.innerHTML = '';
+            for (let i = 1; i <= 40; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = `nav-btn-${i}`;
+                btn.innerText = i;
+                btn.className = 'w-6 h-6 text-[10px] font-mono font-bold rounded border border-stone-300 bg-white text-stone-700 hover:bg-stone-200 transition flex items-center justify-center';
+                btn.onclick = () => scrollToQuestion(i);
+                container.appendChild(btn);
+            }
+        }
+
+        /* SCROLL TO SPECIFIC QUESTION ITEM */
+        function scrollToQuestion(qNum) {
+            // Automatically switch passage view if needed
+            if (qNum <= 13 && activePassage !== 1) switchActivePassage(1);
+            else if (qNum >= 14 && qNum <= 26 && activePassage !== 2) switchActivePassage(2);
+            else if (qNum >= 27 && activePassage !== 3) switchActivePassage(3);
+
+            setTimeout(() => {
+                const target = document.getElementById(`q-anchor-${qNum}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.classList.add('bg-amber-100');
+                    setTimeout(() => target.classList.remove('bg-amber-100'), 1200);
+                }
+            }, 100);
+        }
+
+        /* TRACK ANSWERED QUESTIONS */
+        function markAnswered(qNum) {
+            const navBtn = document.getElementById(`nav-btn-${qNum}`);
+            if (navBtn) {
+                navBtn.classList.remove('bg-white', 'text-stone-700');
+                navBtn.classList.add('bg-amber-600', 'text-white', 'border-amber-700');
+            }
+            updateAnsweredBadge();
+        }
+
+        function updateAnsweredBadge() {
+            let count = 0;
+            // Radios (1-9, 19-22)
+            const radioQs = [1,2,3,4,5,6,7,8,9, 19,20,21,22];
+            radioQs.forEach(q => {
+                if (document.querySelector(`input[name="q${q}"]:checked`)) count++;
+            });
+
+            // Selects (10-13, 23-26, 27-31)
+            const selectQs = [10,11,12,13, 23,24,25,26, 27,28,29,30,31];
+            selectQs.forEach(q => {
+                const sel = document.querySelector(`select[name="q${q}"]`);
+                if (sel && sel.value !== "") count++;
+            });
+
+            // Text inputs (14-18, 32-40)
+            const textQs = [14,15,16,17,18, 32,33,34,35,36,37,38,39,40];
+            textQs.forEach(q => {
+                const inp = document.querySelector(`input[name="q${q}"]`);
+                if (inp && inp.value.trim().length > 0) count++;
+            });
+
+            document.getElementById('answeredCounterBadge').innerText = `${count} / 40`;
+            return count;
+        }
+
+        /* SWITCH VISIBLE PASSAGE TAB */
+        function switchActivePassage(pNum) {
+            activePassage = pNum;
+            for (let i = 1; i <= 3; i++) {
+                const section = document.getElementById(`passageSection${i}`);
+                const tab = document.getElementById(`tabPassage${i}`);
+                if (i === pNum) {
+                    section.classList.remove('hidden');
+                    tab.className = 'px-3 py-1 rounded font-bold transition bg-amber-500 text-stone-950 shadow';
+                } else {
+                    section.classList.add('hidden');
+                    tab.className = 'px-3 py-1 rounded font-medium text-stone-300 hover:bg-stone-800 transition';
+                }
+            }
+            document.getElementById('passageContainer').scrollTop = 0;
+        }
+
+        /* 50-MINUTE COUNTDOWN TIMER */
+        function startTimer() {
+            const timerEl = document.getElementById('examTimer');
+            timerInterval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    timerEl.innerText = "00:00";
+                    timerEl.classList.remove('text-emerald-400');
+                    timerEl.classList.add('text-red-500', 'animate-pulse');
+                    onTimeExpired();
+                    return;
+                }
+
+                totalSeconds--;
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                timerEl.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                // Color shifts when under 10 minutes and 2 minutes
+                if (totalSeconds <= 600 && totalSeconds > 120) {
+                    timerEl.classList.remove('text-emerald-400');
+                    timerEl.classList.add('text-amber-400');
+                } else if (totalSeconds <= 120) {
+                    timerEl.classList.remove('text-amber-400');
+                    timerEl.classList.add('text-red-400', 'animate-pulse');
+                }
+            }, 1000);
+        }
+
+        function onTimeExpired() {
+            if (testSubmitted) return;
+            openModal('timeUpModal');
+        }
+
+        /* SUBMISSION CONFIRMATION MODAL */
+        function confirmSubmitModal() {
+            if (testSubmitted) {
+                openModal('reportModal');
+                return;
+            }
+
+            const answeredCount = updateAnsweredBadge();
+            const warningEl = document.getElementById('unansweredWarning');
+            if (answeredCount < 40) {
+                warningEl.classList.remove('hidden');
+                warningEl.innerHTML = `<strong>Attention:</strong> You have completed <strong>${answeredCount} of 40</strong> questions. Remaining unattempted items will be marked as incorrect. You have time remaining on your 50-minute exam timer.`;
+            } else {
+                warningEl.classList.add('hidden');
+            }
+
+            openModal('confirmModal');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        /* HARVEST USER RESPONSES */
+        function harvestAnswers() {
+            const answers = {};
+            for (let i = 1; i <= 40; i++) {
+                // Radio
+                const radio = document.querySelector(`input[name="q${i}"]:checked`);
+                if (radio) {
+                    answers[i] = radio.value.trim();
+                    continue;
+                }
+                // Select
+                const select = document.querySelector(`select[name="q${i}"]`);
+                if (select) {
+                    answers[i] = select.value.trim();
+                    continue;
+                }
+                // Text
+                const text = document.querySelector(`input[name="q${i}"]`);
+                if (text) {
+                    answers[i] = text.value.trim();
+                    continue;
+                }
+                answers[i] = "";
+            }
+            return answers;
+        }
+
+        /* NORMALIZATION UTILITY FOR TEXT MATCHING */
+        function normalizeText(str) {
+            return str.toLowerCase().replace(/['’]/g, "'").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").trim();
+        }
+
+        /* AUTOMATED GRADING & REPORT GENERATION ENGINE */
+        function gradeAndRenderReport() {
+            closeModal('confirmModal');
+            closeModal('timeUpModal');
+            clearInterval(timerInterval);
+            testSubmitted = true;
+
+            const timeSpentSeconds = (50 * 60) - Math.max(totalSeconds, 0);
+            const spentMin = Math.floor(timeSpentSeconds / 60);
+            const spentSec = timeSpentSeconds % 60;
+            const timeFormatted = `${spentMin} min ${spentSec} sec`;
+
+            const userAnswers = harvestAnswers();
+
+            let scoreTotal = 0;
+            let catScores = {
+                TFNG: { correct: 0, total: 5 },
+                MCQ: { correct: 0, total: 8 },
+                CLASS: { correct: 0, total: 8 },
+                ORGANELLE: { correct: 0, total: 5 },
+                COMPLETION: { correct: 0, total: 14 }
+            };
+
+            const auditRows = [];
+
+            EXAM_DATA.forEach(item => {
+                const userVal = userAnswers[item.q] || "";
+                let isCorrect = false;
+
+                if (item.type === "COMPLETION") {
+                    const normUser = normalizeText(userVal);
+                    const normKey = normalizeText(item.key);
+                    const acceptedList = (item.accepted || []).map(a => normalizeText(a));
+                    isCorrect = normUser === normKey || acceptedList.includes(normUser);
+                } else {
+                    isCorrect = userVal.toUpperCase() === item.key.toUpperCase();
+                }
+
+                if (isCorrect) {
+                    scoreTotal++;
+                    if (catScores[item.type]) catScores[item.type].correct++;
+                }
+
+                auditRows.push({
+                    ...item,
+                    userVal: userVal === "" ? "(Blank)" : userVal,
+                    isCorrect: isCorrect
+                });
+            });
+
+            // Band Score Converter
+            const bandInfo = calculateIELTSBand(scoreTotal);
+
+            // Populate Report Metrics
+            document.getElementById('reportRawScore').innerText = `${scoreTotal} / 40`;
+            document.getElementById('reportPercentage').innerText = `${Math.round((scoreTotal / 40) * 100)}% Overall Accuracy`;
+            document.getElementById('reportBandScore').innerText = `Band ${bandInfo.band.toFixed(1)}`;
+            document.getElementById('reportBandLevel').innerText = bandInfo.descriptor;
+            document.getElementById('reportTimeSpent').innerText = timeFormatted;
+            document.getElementById('reportTimeDisplay').innerText = timeFormatted;
+            document.getElementById('reportCompetencyText').innerText = bandInfo.descriptor;
+            
+            const badgeEl = document.getElementById('reportCompetencyBadge');
+            badgeEl.innerText = bandInfo.badge;
+            badgeEl.className = `text-xs px-2.5 py-0.5 rounded font-mono font-bold ${bandInfo.badgeColor}`;
+
+            // Category progress bars
+            updateBar('scoreTypeTFNG', 'barTFNG', catScores.TFNG.correct, 5);
+            updateBar('scoreTypeMCQ', 'barMCQ', catScores.MCQ.correct, 8);
+            updateBar('scoreTypeClass', 'barClass', catScores.CLASS.correct, 8);
+            updateBar('scoreTypeOrganelle', 'barOrganelle', catScores.ORGANELLE.correct, 5);
+            updateBar('scoreTypeCompletion', 'barCompletion', catScores.COMPLETION.correct, 14);
+
+            // Generate Qualitative Feedback
+            generateDiagnosticFeedback(catScores, scoreTotal);
+
+            // Populate Audit Table
+            cachedAuditRows = auditRows;
+            renderAuditTable('all');
+
+            // Open Modal
+            openModal('reportModal');
+        }
+
+        /* OFFICIAL IELTS ACADEMIC READING BAND SCALE (Out of 40 Items) */
+        function calculateIELTSBand(score) {
+            if (score >= 39) return { band: 9.0, descriptor: "Expert User", badge: "IELTS Band 9.0", badgeColor: "bg-emerald-100 text-emerald-800" };
+            if (score >= 37) return { band: 8.5, descriptor: "Very Good User", badge: "IELTS Band 8.5", badgeColor: "bg-emerald-100 text-emerald-800" };
+            if (score >= 35) return { band: 8.0, descriptor: "Very Good User", badge: "IELTS Band 8.0", badgeColor: "bg-teal-100 text-teal-800" };
+            if (score >= 33) return { band: 7.5, descriptor: "Good User", badge: "IELTS Band 7.5", badgeColor: "bg-teal-100 text-teal-800" };
+            if (score >= 30) return { band: 7.0, descriptor: "Good User", badge: "IELTS Band 7.0", badgeColor: "bg-sky-100 text-sky-800" };
+            if (score >= 27) return { band: 6.5, descriptor: "Competent User", badge: "IELTS Band 6.5", badgeColor: "bg-amber-100 text-amber-800" };
+            if (score >= 23) return { band: 6.0, descriptor: "Competent User", badge: "IELTS Band 6.0", badgeColor: "bg-amber-100 text-amber-800" };
+            if (score >= 19) return { band: 5.5, descriptor: "Modest User", badge: "IELTS Band 5.5", badgeColor: "bg-orange-100 text-orange-800" };
+            if (score >= 15) return { band: 5.0, descriptor: "Modest User", badge: "IELTS Band 5.0", badgeColor: "bg-orange-100 text-orange-800" };
+            if (score >= 12) return { band: 4.5, descriptor: "Limited User", badge: "IELTS Band 4.5", badgeColor: "bg-rose-100 text-rose-800" };
+            if (score >= 8)  return { band: 4.0, descriptor: "Limited User", badge: "IELTS Band 4.0", badgeColor: "bg-rose-100 text-rose-800" };
+            return { band: 3.5, descriptor: "Extremely Limited User", badge: "IELTS Band 3.5", badgeColor: "bg-rose-100 text-rose-800" };
+        }
+
+        function updateBar(labelId, barId, score, total) {
+            const pct = Math.round((score / total) * 100);
+            document.getElementById(labelId).innerText = `${score}/${total} (${pct}%)`;
+            document.getElementById(barId).style.width = `${pct}%`;
+        }
+
+        /* DIAGNOSTIC FEEDBACK GENERATOR */
+        function generateDiagnosticFeedback(catScores, totalScore) {
+            const strengthsList = document.getElementById('reportStrengthsList');
+            const weaknessesList = document.getElementById('reportWeaknessesList');
+            const improvementList = document.getElementById('reportImprovementList');
+
+            strengthsList.innerHTML = '';
+            weaknessesList.innerHTML = '';
+            improvementList.innerHTML = '';
+
+            // Strengths Analysis
+            if (catScores.TFNG.correct >= 4) {
+                appendList(strengthsList, "Outstanding factual discrimination in True/False/Not Given tasks; clearly differentiates between direct contradictions (FALSE) and absent textual claims (NOT GIVEN).");
+            }
+            if (catScores.MCQ.correct >= 6) {
+                appendList(strengthsList, "Strong analytical comprehension across complex scientific Multiple Choice items, resisting distractor traps regarding magnification thresholds and cellular storage.");
+            }
+            if (catScores.CLASS.correct >= 6) {
+                appendList(strengthsList, "Exceptional taxonomy and structural classification skills (Microscope specifications & Prokaryotic vs. Eukaryotic characteristics).");
+            }
+            if (catScores.ORGANELLE.correct >= 4) {
+                appendList(strengthsList, "Precise organelle functional mapping (Ribosomes, Mitochondria, Golgi Apparatus, Chloroplasts, and Cellulose Cell Wall).");
+            }
+            if (catScores.COMPLETION.correct >= 10) {
+                appendList(strengthsList, "Superior verbatim lexical retrieval for Summary and Table completion, respecting the NO MORE THAN TWO WORDS constraint.");
+            }
+            if (strengthsList.children.length === 0) {
+                appendList(strengthsList, "Engaged with all three academic science reading passages and attempted a wide variety of question types.");
+            }
+
+            // Weaknesses Analysis
+            if (catScores.TFNG.correct < 3) {
+                appendList(weaknessesList, "Vulnerability in True/False/Not Given questions: Note Question 3 regarding chemical fluorescent dyes—if the passage does not confirm or deny it, select NOT GIVEN.");
+            }
+            if (catScores.CLASS.correct < 5) {
+                appendList(weaknessesList, "Classification confusion between Transmission Electron Microscopy (TEM, sliced through sample) and Scanning Electron Microscopy (SEM, 3D surface topography).");
+            }
+            if (catScores.ORGANELLE.correct < 3) {
+                appendList(weaknessesList, "Lapses in distinguishing universal cellular machinery (Ribosomes present in both cell domains) from eukaryotic-specific organelles (Mitochondria, Golgi).");
+            }
+            if (catScores.COMPLETION.correct < 8) {
+                appendList(weaknessesList, "Lexical retrieval errors in scientific summary completion: Ensure exact grammatical terms directly from the text are used (e.g., 'monosaccharides', 'meristems', 'stem cells').");
+            }
+            if (weaknessesList.children.length === 0) {
+                appendList(weaknessesList, "Minor pacing friction under the 50-minute exam threshold.");
+            }
+
+            // Improvement Recommendations
+            appendList(improvementList, "<strong>Verbatim Text Copying:</strong> In IELTS summary and table completion, never introduce outside synonyms. Extract exact words found directly in the passage (e.g., 'meristems', 'tissues', 'glycogen').");
+            appendList(improvementList, "<strong>Domain Delineation:</strong> When evaluating cell types, remember that all living cells (prokaryotes and eukaryotes) possess cell membranes, ribosomes, and DNA/RNA; only eukaryotes have membrane-bound organelles.");
+            appendList(improvementList, "<strong>Time Management Strategy:</strong> For 3 reading passages in 50 minutes, allocate roughly 16 minutes to Passage 1, 17 minutes to Passage 2, and 17 minutes to Passage 3.");
+        }
+
+        function appendList(parent, text) {
+            const li = document.createElement('li');
+            li.innerHTML = text;
+            parent.appendChild(li);
+        }
+
+        /* AUDIT TABLE RENDERING & FILTERING */
+        function filterReportTable(mode) {
+            document.getElementById('filterBtnAll').className = mode === 'all' ? 'px-2.5 py-1 bg-stone-800 text-white rounded font-bold' : 'px-2.5 py-1 bg-stone-200 hover:bg-stone-300 rounded font-bold text-stone-700';
+            document.getElementById('filterBtnIncorrect').className = mode === 'incorrect' ? 'px-2.5 py-1 bg-rose-700 text-white rounded font-bold' : 'px-2.5 py-1 bg-rose-100 text-rose-800 hover:bg-rose-200 rounded font-bold';
+            document.getElementById('filterBtnCorrect').className = mode === 'correct' ? 'px-2.5 py-1 bg-emerald-700 text-white rounded font-bold' : 'px-2.5 py-1 bg-emerald-100 text-emerald-800 hover:bg-emerald-200 rounded font-bold';
+            renderAuditTable(mode);
+        }
+
+        function renderAuditTable(filter) {
+            const tbody = document.getElementById('detailedReportTableBody');
+            tbody.innerHTML = '';
+
+            cachedAuditRows.forEach(item => {
+                if (filter === 'correct' && !item.isCorrect) return;
+                if (filter === 'incorrect' && item.isCorrect) return;
+
+                const tr = document.createElement('tr');
+                tr.className = item.isCorrect ? 'hover:bg-emerald-50/50' : 'hover:bg-rose-50/50 bg-rose-50/20';
+
+                const statusBadge = item.isCorrect 
+                    ? '<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 font-sans">✓ Correct</span>'
+                    : '<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-300 font-sans">✗ Incorrect</span>';
+
+                tr.innerHTML = `
+                    <td class="p-2 text-center font-bold font-mono border-r border-stone-200">${item.q}</td>
+                    <td class="p-2 text-center font-mono font-semibold border-r border-stone-200 ${item.isCorrect ? 'text-emerald-800' : 'text-rose-700 font-bold'}">${escapeHtml(item.userVal)}</td>
+                    <td class="p-2 text-center font-mono font-bold text-stone-900 border-r border-stone-200 bg-stone-50/70">${escapeHtml(item.key)}</td>
+                    <td class="p-2 text-center border-r border-stone-200">${statusBadge}</td>
+                    <td class="p-2 text-center text-xs font-semibold text-stone-600 border-r border-stone-200 whitespace-nowrap font-sans">${item.location}</td>
+                    <td class="p-2 text-xs text-stone-700 leading-relaxed">${item.explanation}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        /* TEXT HIGHLIGHTER ENGINE */
+        function setHighlightColor(color) {
+            activeHighlightColor = color;
+            applySelectionHighlight();
+        }
+
+        function applySelectionHighlight() {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+
+            const passageEl = document.getElementById('passageContainer');
+            if (!passageEl.contains(range.commonAncestorContainer)) return;
+
+            if (range.toString().trim().length === 0) return;
+
+            const span = document.createElement('span');
+            span.className = `hl-${activeHighlightColor} px-0.5 rounded cursor-pointer`;
+            span.title = "Click to remove highlight";
+            span.onclick = function() {
+                const parent = this.parentNode;
+                while (this.firstChild) parent.insertBefore(this.firstChild, this);
+                parent.removeChild(this);
+            };
+
+            try {
+                range.surroundContents(span);
+                selection.removeAllRanges();
+            } catch (e) {
+                // Ignore cross-element selections
+            }
+        }
+
+        document.getElementById('passageContainer').addEventListener('mouseup', () => {
+            const sel = window.getSelection();
+            if (sel && sel.toString().trim().length > 1) {
+                applySelectionHighlight();
+            }
+        });
+
+        function clearHighlights() {
+            const highlighted = document.querySelectorAll('#passageContainer span[class*="hl-"]');
+            highlighted.forEach(el => {
+                const parent = el.parentNode;
+                while (el.firstChild) parent.insertBefore(el.firstChild, el);
+                parent.removeChild(el);
+            });
+        }
+
+        /* FONT SIZE CONTROLLER */
+        function changeFontSize(delta) {
+            currentPassageFontSize = Math.min(Math.max(currentPassageFontSize + delta, 13.5), 21);
+            document.getElementById('passageContainer').style.fontSize = `${currentPassageFontSize}px`;
+        }
+
+        function setCurrentDateDisplay() {
+            const today = new Date();
+            const formatted = today.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            document.getElementById('reportDate').innerText = formatted;
+        }
+    </script>
+</body>
+</html>
